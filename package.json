@@ -1,0 +1,15 @@
+{
+  "name": "dump-creator",
+  "version": "1.0.0",
+  "description": "Read a list of wiki list pages and find all sublists and retrieve the xml dump.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sven Mischkewitz",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.55.0",
+    "simplecrawler": "^0.5.2"
+  }
+}
