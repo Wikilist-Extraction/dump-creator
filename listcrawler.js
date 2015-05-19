@@ -46,7 +46,7 @@ function getNameFromUriPath(uriPath) {
 // use list of wiki page names and create a query string for the wiki exporter
 function buildExportQuery(pages) {
 	function buildPagesQuery() {
-		var pageDelimiter = "%A0";
+		var pageDelimiter = "%0A";
 		return pages.join(pageDelimiter);
 	}
 
@@ -80,7 +80,7 @@ function exportDependentPages(pages, callback) {
 		.pipe(ws);
 }
 
-// start crawler
+start crawler
 console.log("START CRAWLING, BE PATIENT.");
 
 pageCrawler
