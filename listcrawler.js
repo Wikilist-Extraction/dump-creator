@@ -80,7 +80,7 @@ function exportDependentPages(pages, callback) {
 		.pipe(ws);
 }
 
-start crawler
+// start crawler
 console.log("START CRAWLING, BE PATIENT.");
 
 pageCrawler
