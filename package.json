@@ -8,7 +8,7 @@
   },
   "preferGlobal": true,
   "author": "Sven Mischkewitz",
-  "license": "ISC",
+  "license": "MIT",
   "bin": {
     "wiki-dumper": "bin/wiki-dumper.js"
   },
