@@ -38,9 +38,6 @@ if (dumpName === null || (typeof dumpName == "string" && !dumpName.includes(".xm
 	return 1;
 }
 
-var extendedDumpName = "enwiki-"+today+"-"+dumpName;
-var dirpath = path.join("enwiki", today);
-
 if (sitesToCrawl.length === 0) {
 	console.error("Provide at least one wikipedia title as url format, e.g.\n%s %s Lists_of_writers List_of_Nobel_laureates nobels-list.xml", process.argv[0], process.argv[1]);
 	return 1;
@@ -85,9 +82,7 @@ function exportDependentPages(pages, callback) {
 		}
 	};
 
-	mkdirSync(dirpath);
-
-	var ws = fs.createWriteStream( path.join(dirpath, extendedDumpName) );
+	var ws = fs.createWriteStream(dumpName);
 	ws.on("finish", callback);
 
 	request
@@ -101,8 +96,5 @@ function exportDependentPages(pages, callback) {
 // start crawler
 console.log("START EXPORTING, BE PATIENT");
 exportDependentPages(sitesToCrawl, function() {
-	console.log("DONE! Look at %s", path.join(dirpath, extendedDumpName));
+	console.log("DONE! Look at %s", dumpName);
 });
-
-
-
