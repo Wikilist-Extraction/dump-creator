@@ -1,22 +1,11 @@
 #! /usr/bin/env node
 
 var exportSites = require('../lib/export-sites');
+var fs = require('fs');
 
 var customArgv = process.argv.slice(2);
-var sitesToCrawl = customArgv.slice(0, -1);
-var dumpName = customArgv.slice(-1).length == 1 ? customArgv.slice(-1)[0] : null;
-
-function getToday() {
-	var date = new Date();
-	var year = date.getFullYear();
-	var month = date.getMonth() + 1 < 10 ? "0"+(date.getMonth() + 1) : ""+(date.getMonth() + 1);
-	var day = date.getDate() < 10 ? "0"+date.getDate() : ""+date.getDate();
-
-	return year + month + day;
-}
-
-var today = getToday();
-
+var sourceFilename = customArgv[0];
+var dumpName = customArgv[1];
 
 /** POLYFILLS **/
 
@@ -33,12 +22,23 @@ if (dumpName === null || (typeof dumpName == "string" && !dumpName.includes(".xm
 	return 1;
 }
 
-if (sitesToCrawl.length === 0) {
-	console.error("Provide at least one wikipedia title as url format, e.g.\n%s %s Lists_of_writers List_of_Nobel_laureates nobels-list.xml", process.argv[0], process.argv[1]);
+if (sourceFilename === null) {
+	console.error("Provide at a file containing with one wikipedia title as url format per line, e.g.\nLists_of_writers\nList_of_Nobel_laureates\n...", process.argv[0], process.argv[1]);
 	return 1;
 }
 
+if (!fs.existsSync(sourceFilename)) {
+	console.error("Provided file %s does not exist!", sourceFilename);
+	return 1;
+}
 
+var file = fs.readFileSync(sourceFilename, { encoding: 'utf8' });
+var sitesToCrawl = file.match(/[^\n]+/g); // split by newline
+
+if (typeof sitesToCrawl !== 'object' || sitesToCrawl.length === 0) {
+	console.error("Could not find sites to crawl in %s.", sourceFilename);
+	return 1;
+}
 
 // start crawler
 console.log("START EXPORTING, BE PATIENT");
